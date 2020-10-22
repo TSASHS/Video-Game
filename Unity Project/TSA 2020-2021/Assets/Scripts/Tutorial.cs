@@ -18,6 +18,7 @@ public class Tutorial : MonoBehaviour
     {
         playerCamera = player.transform.GetChild(2).gameObject;
         tutorialText = tutorialSprite.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        tutorialSprite.SetActive(true);
     }
 
     // Update is called once per frame
@@ -25,7 +26,6 @@ public class Tutorial : MonoBehaviour
     {
 
         if(tutorialStage == 0){
-            tutorialSprite.SetActive(true);
             tutorialText.text = "Move the cursor to look around";
             if(Mathf.Abs(player.transform.rotation.y) > 5/360|| Mathf.Abs(playerCamera.transform.localRotation.x) > 5/360){
                 secondCountBool = true;
