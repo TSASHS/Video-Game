@@ -22,6 +22,7 @@ public class ChallengeScript : MonoBehaviour
         */
         if(Input.GetKeyDown(KeyCode.C)){
             SetChallengeComplete();
+            print("yeh");
         }
     }
     void SetChallengeComplete ()
