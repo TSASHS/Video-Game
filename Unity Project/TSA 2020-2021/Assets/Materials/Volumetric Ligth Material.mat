@@ -48,6 +48,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_52430E21_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 6e27226db3438ae45b4540076e61bbeb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_A7C88E1B_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 6e27226db3438ae45b4540076e61bbeb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,8 +63,9 @@ Material:
     m_Floats:
     - Vector1_15FE42B8: 0.1
     - Vector1_2A72ABA3: 1
-    - Vector1_2A98B6A4: 0.05
-    - Vector1_92084848: 0.01
+    - Vector1_2A98B6A4: 0.01
+    - Vector1_92084848: 0.005
+    - Vector1_A876CFDA: 0.5
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -81,6 +90,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_638EFA72: {r: 1, g: 0.8745098, b: 0.6745098, a: 1}
+    - Vector2_E2DE5259: {r: 1, g: 5, b: 0, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
