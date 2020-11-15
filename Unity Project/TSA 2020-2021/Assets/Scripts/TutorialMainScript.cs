@@ -1,9 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEditor;
+using UnityStandardAssets;
 
 public class TutorialMainScript : MonoBehaviour
 {
+    public GameObject tutorialSprite;
+    public GameObject player, keys;
+    GameObject playerCamera;
+    TextMeshProUGUI tutorialText, wText, aText, sText, dText;
+    LayerMask walkToMask;
+    int tutorialStage = 0;
+    bool secondCountBool, wClicked, aClicked, dClicked, sClicked = false;
+    float secondCount = 0;
     public bool interactable0;
     public GameObject eText;
     public LayerMask interactableLayer, cubes;
@@ -31,53 +42,150 @@ public class TutorialMainScript : MonoBehaviour
     private Color circleColor1;
     private GameObject blueCube;
     private bool moving;
+    private Dictionary<int, int> pictureRandomDict = new Dictionary<int, int>();
+    public List<Texture2D> pictureTextureList = new List<Texture2D>();
     // Start is called before the first frame update
     // Update is called once per frame
     void Start()
     {
+        playerCamera = player.transform.GetChild(2).gameObject;
+        tutorialText = tutorialSprite.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        tutorialSprite.SetActive(true);
+
+        controller.transform.GetChild(0).gameObject.SetActive(false);
+        pictureRandomDict.Add(0,5);
+        pictureRandomDict.Add(1,0);
+        pictureRandomDict.Add(2,7);
+        pictureRandomDict.Add(3,1);
+        pictureRandomDict.Add(4,8);
+        pictureRandomDict.Add(5,2);
+        pictureRandomDict.Add(6,4);
+        pictureRandomDict.Add(7,3);
+        pictureRandomDict.Add(8,6);
         Cursor.lockState = CursorLockMode.Locked;
         start = -Input.GetAxis("Mouse Y");
         circleColor1 = circleColor;
-        foreach(GameObject cube in cubeList){
-            cube.GetComponent<Renderer>().material.shader = Shader.Find("Shader Graphs/Outline");
-            cube.GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.black);
-            cube.GetComponent<Puzzle1Cube>().node.pos = cube.transform.position;
+        for(int i = 0; i < cubeList.Count; i++){
+            cubeList[i].GetComponent<Renderer>().material.shader = Shader.Find("Shader Graphs/Outline");
+            cubeList[i].GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.black);
+            cubeList[i].GetComponent<Renderer>().material.SetTexture("_AO", pictureTextureList[pictureRandomDict[i]]);
+            cubeList[i].GetComponent<Renderer>().material.SetTexture("_Diff", pictureTextureList[pictureRandomDict[i]+9]);
+            cubeList[i].GetComponent<Renderer>().material.SetTexture("_Nor", pictureTextureList[pictureRandomDict[i]+18]);
+            cubeList[i].GetComponent<Renderer>().material.SetTexture("_Spec", pictureTextureList[pictureRandomDict[i]+27]);
+            cubeList[i].GetComponent<Puzzle1Cube>().node.pos = cubeList[i].transform.position;
         }
     }
     void Update()
     {
-        eTextFunc();
         Challenge1();
+        eTextFunc();
         if(challenge != true){
             LookAround();
             Movement();
         }
+        Tutorial();
     }
-    void eTextFunc (){
-        RaycastHit hit;
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hit, 2f,interactableLayer)){
-            if(hit.transform.gameObject.GetComponent<InteractableObj>().interactable == true && interactable0 == false){
-                eText.SetActive(true);
-                if(Input.GetKeyDown(KeyCode.E)){
-                    if(hit.transform.gameObject.GetComponent<InteractableObj>().id == 0){
-                        interactable0 = true;
-                        mainCamera.enabled = false;
-                        interactCamera0.enabled = true;
-                    }
-                }
+    void Tutorial ()
+    {
+
+        if(tutorialStage == 0){
+            tutorialText.text = "Move the cursor to look around";
+            if(Mathf.Abs(player.transform.rotation.y) > 5/360|| Mathf.Abs(playerCamera.transform.localRotation.x) > 5/360){
+                secondCountBool = true;
+                tutorialText.color = Color.green;
             }
-        }else{
-            eText.SetActive(false);
+        }
+        if(tutorialStage == 1){
+            keys.SetActive(true);
+            tutorialText.text = "Use the                    keys to move";
+            if(Input.GetKeyDown(KeyCode.W)){
+                wClicked = true;
+                wText.color = Color.green;
+            }
+            if(Input.GetKeyDown(KeyCode.A)){
+                aClicked = true;  
+                aText.color = Color.green;              
+            }
+            if(Input.GetKeyDown(KeyCode.D)){
+                dClicked = true;
+                dText.color = Color.green;
+            }
+            if(Input.GetKeyDown(KeyCode.S)){
+                sClicked = true;
+                sText.color = Color.green;
+            }
+            if(wClicked == true && aClicked == true&& dClicked == true && sClicked == true){
+                tutorialText.color = Color.green;
+                secondCountBool = true;
+            }
+        }
+        if(tutorialStage == 2){
+            tutorialText.text = "Walk to the marked location";
+            if(Physics.CheckSphere(groundCheck.position, groundDistance, walkToMask)){
+                tutorialText.color = Color.green;
+                secondCountBool = true;
+            }
+        }
+        if(tutorialStage == 3){
+            tutorialText.text = "Click E to interact with the picture";
+            if(challenge == true){
+                tutorialText.color = Color.green;
+                secondCountBool = true;
+            }
+        }
+        if(tutorialStage == 4){
+            tutorialText.text = "Rearrange the blocks to form the picture";
+        }
+        if(tutorialStage == 5){
+            tutorialText.text = "Walk through the tunnel to the next room";
+        }
+        if(secondCountBool == true){
+            secondCount += Time.deltaTime;
+            if(secondCount > 1){
+                secondCountBool = false;
+                tutorialText.color = Color.black;
+                tutorialStage += 1;
+                secondCount = 0;
+                keys.SetActive(false);
+            }
         }
     }
     void Challenge1()
     {
+        if(moving == true)
+        {
+            Vector3 oldPos = blueCube.transform.position;
+            Vector3 newPos = blueCube.GetComponent<Puzzle1Cube>().node.pos;
+            if(oldPos != newPos){
+                if(oldPos.x > newPos.x){
+                    blueCube.transform.position -= Vector3.right * 1.75f * Time.deltaTime;
+                    blueCube.transform.position = new Vector3(Mathf.Clamp(blueCube.transform.position.x, newPos.x, oldPos.x), blueCube.transform.position.y, oldPos.z);
+                }else if (oldPos.x < newPos.x){
+                    blueCube.transform.position += Vector3.right * 1.75f * Time.deltaTime;
+                    blueCube.transform.position = new Vector3(Mathf.Clamp(blueCube.transform.position.x, oldPos.x, newPos.x), blueCube.transform.position.y, oldPos.z);
+                }
+                if(oldPos.y > newPos.y){
+                    blueCube.transform.position -= Vector3.up * 1.75f * Time.deltaTime;
+                    blueCube.transform.position = new Vector3(blueCube.transform.position.x, Mathf.Clamp(blueCube.transform.position.y, newPos.y, oldPos.y), oldPos.z);                        
+                }else if (oldPos.y < newPos.y){
+                    blueCube.transform.position += Vector3.up * 1.75f * Time.deltaTime;
+                    blueCube.transform.position = new Vector3(blueCube.transform.position.x, Mathf.Clamp(blueCube.transform.position.y, oldPos.y, newPos.y), oldPos.z);
+                }
+            }else{
+                moving = false;
+                blueCube = null;
+            }
+        }
         challenge = interactable0;
         if(challenge == true){
-            Cursor.lockState = CursorLockMode.None;
             eObj.SetActive(false);
-            whitePoint.SetActive(false);
+            if(Input.GetKeyDown(KeyCode.E)){
+                whitePoint.SetActive(true);
+                interactCamera0.enabled = false;
+                interactable0 = false;
+                mainCamera.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             if(Input.GetMouseButtonDown(0) && moving == false){
                 RaycastHit hit;
                 Ray ray = interactCamera0.ScreenPointToRay(Input.mousePosition);
@@ -86,7 +194,6 @@ public class TutorialMainScript : MonoBehaviour
                     blueCube.GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.black);
                 }
                 if(Physics.Raycast(ray, out hit, 10000f, cubes)){
-                    print(1);
                     if(cubeList.Contains(hit.transform.gameObject)){
                         GameObject selectedCube = hit.transform.gameObject;
                         selectedCube.GetComponent<Renderer>().material.SetColor("_OutlineColor", circleColor1);
@@ -107,7 +214,6 @@ public class TutorialMainScript : MonoBehaviour
                         }
                         blueCube = selectedCube;
                         if(selectedCube.GetComponent<Puzzle1Cube>().node.neighbours.Contains(cubeList[8].GetComponent<Puzzle1Cube>().node)){
-                            print("yesss");
                             cubeList[8].GetComponent<Puzzle1Cube>().node.image.color = circleColor;
                         }              
                     }else{
@@ -115,33 +221,52 @@ public class TutorialMainScript : MonoBehaviour
                     }
                 }
             }
-            if(moving == true)
-            {
-                Vector3 oldPos = blueCube.transform.position;
-                Vector3 newPos = blueCube.GetComponent<Puzzle1Cube>().node.pos;
-                if(oldPos != newPos){
-                    if(oldPos.x > newPos.x){
-                        print(1);
-                        blueCube.transform.position -= Vector3.right * 1.75f * Time.deltaTime;
-                        blueCube.transform.position = new Vector3(Mathf.Clamp(blueCube.transform.position.x, newPos.x, oldPos.x), blueCube.transform.position.y, oldPos.z);
-                    }else if (oldPos.x < newPos.x){
-                        blueCube.transform.position += Vector3.right * 1.75f * Time.deltaTime;
-                        blueCube.transform.position = new Vector3(Mathf.Clamp(blueCube.transform.position.x, oldPos.x, newPos.x), blueCube.transform.position.y, oldPos.z);
-                    }
-                    if(oldPos.y > newPos.y){
-                        print(3);
-                        blueCube.transform.position -= Vector3.up * 1.75f * Time.deltaTime;
-                        blueCube.transform.position = new Vector3(blueCube.transform.position.x, Mathf.Clamp(blueCube.transform.position.y, newPos.y, oldPos.y), oldPos.z);                        
-                    }else if (oldPos.y < newPos.y){
-                        print(4);
-                        blueCube.transform.position += Vector3.up * 1.75f * Time.deltaTime;
-                        blueCube.transform.position = new Vector3(blueCube.transform.position.x, Mathf.Clamp(blueCube.transform.position.y, oldPos.y, newPos.y), oldPos.z);
-                    }
-                }else{
-                    moving = false;
-                    blueCube = null;
+
+            int correctCubes = 0;
+            for(int i = 0; i < cubeList.Count; i++){
+                int correctID;
+                if(pictureRandomDict[i] < 2){
+                    correctID = pictureRandomDict[i] + 3;
+                }else if (pictureRandomDict[i] > 5){
+                    correctID = pictureRandomDict[i];
+                }else {
+                    correctID = pictureRandomDict[i] - 3;
+                }
+                if(cubeList[i].GetComponent<Puzzle1Cube>().node.id == correctID){
+                    correctCubes += 1;
                 }
             }
+            if(correctCubes == 8){
+                challengeCompleted = true;
+                whitePoint.SetActive(true);
+                interactCamera0.enabled = false;
+                interactable0 = false;
+                mainCamera.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                animator.SetBool("ChallengeCompleted", true);
+                tutorialText.color = Color.green;
+                secondCountBool = true;
+            }
+        }
+    }
+    void eTextFunc (){
+        RaycastHit hit;
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out hit, 2f,interactableLayer)){
+            if(hit.transform.gameObject.GetComponent<InteractableObj>().interactable == true && challenge == false){
+                eText.SetActive(true);
+                if(Input.GetKeyDown(KeyCode.E)){
+                    if(hit.transform.gameObject.GetComponent<InteractableObj>().id == 0 && challengeCompleted == false){
+                        interactable0 = true;
+                        mainCamera.enabled = false;
+                        interactCamera0.enabled = true;
+                        Cursor.lockState = CursorLockMode.None;
+                        whitePoint.SetActive(false);
+                    }
+                }
+            }
+        }else{
+            eText.SetActive(false);
         }
     }
     void LookAround()
