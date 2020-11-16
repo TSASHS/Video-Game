@@ -8,10 +8,12 @@ using UnityStandardAssets;
 public class TutorialMainScript : MonoBehaviour
 {
     public GameObject tutorialSprite;
-    public GameObject player, keys;
+    public GameObject player, keys, circleOnGround;
     GameObject playerCamera;
-    TextMeshProUGUI tutorialText, wText, aText, sText, dText;
-    LayerMask walkToMask;
+    TextMeshProUGUI tutorialText;
+    public TextMeshProUGUI wText, aText, sText, dText;
+    public GameObject textObjHolder;
+    public LayerMask walkToMask;
     int tutorialStage = 0;
     bool secondCountBool, wClicked, aClicked, dClicked, sClicked = false;
     float secondCount = 0;
@@ -96,8 +98,8 @@ public class TutorialMainScript : MonoBehaviour
             }
         }
         if(tutorialStage == 1){
-            keys.SetActive(true);
-            tutorialText.text = "Use the                    keys to move";
+            textObjHolder.SetActive(true);
+            tutorialText.text = "Use the          keys to move";
             if(Input.GetKeyDown(KeyCode.W)){
                 wClicked = true;
                 wText.color = Color.green;
@@ -118,13 +120,19 @@ public class TutorialMainScript : MonoBehaviour
                 tutorialText.color = Color.green;
                 secondCountBool = true;
             }
+        }else{
+            textObjHolder.SetActive(false);
         }
         if(tutorialStage == 2){
+            circleOnGround.SetActive(true);
             tutorialText.text = "Walk to the marked location";
             if(Physics.CheckSphere(groundCheck.position, groundDistance, walkToMask)){
                 tutorialText.color = Color.green;
                 secondCountBool = true;
             }
+        }else{
+            circleOnGround.SetActive(false);
+            print("Lol");
         }
         if(tutorialStage == 3){
             tutorialText.text = "Click E to interact with the picture";
@@ -143,10 +151,9 @@ public class TutorialMainScript : MonoBehaviour
             secondCount += Time.deltaTime;
             if(secondCount > 1){
                 secondCountBool = false;
-                tutorialText.color = Color.black;
+                tutorialText.color = Color.white;
                 tutorialStage += 1;
                 secondCount = 0;
-                keys.SetActive(false);
             }
         }
     }
@@ -253,10 +260,10 @@ public class TutorialMainScript : MonoBehaviour
         RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if(Physics.Raycast(ray, out hit, 2f,interactableLayer)){
-            if(hit.transform.gameObject.GetComponent<InteractableObj>().interactable == true && challenge == false){
+            if(hit.transform.gameObject.GetComponent<InteractableObj>().interactable == true && challenge == false && challengeCompleted == false){
                 eText.SetActive(true);
                 if(Input.GetKeyDown(KeyCode.E)){
-                    if(hit.transform.gameObject.GetComponent<InteractableObj>().id == 0 && challengeCompleted == false){
+                    if(hit.transform.gameObject.GetComponent<InteractableObj>().id == 0){
                         interactable0 = true;
                         mainCamera.enabled = false;
                         interactCamera0.enabled = true;
