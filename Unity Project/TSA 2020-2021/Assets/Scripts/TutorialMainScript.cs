@@ -132,7 +132,6 @@ public class TutorialMainScript : MonoBehaviour
             }
         }else{
             circleOnGround.SetActive(false);
-            print("Lol");
         }
         if(tutorialStage == 3){
             tutorialText.text = "Click E to interact with the picture";
