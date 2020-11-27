@@ -7,6 +7,7 @@ using UnityStandardAssets;
 
 public class TutorialMainScript : MonoBehaviour
 {
+    float tick = 0;
     public GameObject tutorialSprite;
     public GameObject player, keys, circleOnGround;
     GameObject playerCamera;
@@ -39,6 +40,7 @@ public class TutorialMainScript : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 1.2f;
     public LayerMask ground;
+    public LayerMask ground2;
     public bool onGround = true;
     public Color32 circleColor = new Color32(41, 108, 164, 255);
     private Color circleColor1;
@@ -46,6 +48,8 @@ public class TutorialMainScript : MonoBehaviour
     private bool moving;
     private Dictionary<int, int> pictureRandomDict = new Dictionary<int, int>();
     public List<Texture2D> pictureTextureList = new List<Texture2D>();
+    public Light torchLight;
+    private bool enteredRoom = false;
     // Start is called before the first frame update
     // Update is called once per frame
     void Start()
@@ -79,6 +83,7 @@ public class TutorialMainScript : MonoBehaviour
     }
     void Update()
     {
+        tick += 1;
         Challenge1();
         eTextFunc();
         if(challenge != true){
@@ -86,6 +91,12 @@ public class TutorialMainScript : MonoBehaviour
             Movement();
         }
         Tutorial();
+        LightFLicker();
+        if(enteredRoom == false && Physics.CheckSphere(groundCheck.position, groundDistance/2, ground2) == true){
+            print("enteredRoom");
+            enteredRoom = true;
+            animator.SetBool("InRoom", true);
+        }
     }
     void Tutorial ()
     {
@@ -154,6 +165,15 @@ public class TutorialMainScript : MonoBehaviour
                 tutorialStage += 1;
                 secondCount = 0;
             }
+        }
+    }
+    void LightFLicker()
+    {
+        if(tick == 5){
+            tick = 0;
+            float intensity = torchLight.intensity + Random.Range(-0.003f,0.003f);
+            intensity = Mathf.Clamp(intensity, 0.03f, 0.05f);
+            torchLight.intensity = intensity;
         }
     }
     void Challenge1()
@@ -289,6 +309,9 @@ public class TutorialMainScript : MonoBehaviour
     void Movement()
     {
         onGround = Physics.CheckSphere(groundCheck.position, groundDistance, ground);
+        if(onGround == false){
+            onGround = Physics.CheckSphere(groundCheck.position, groundDistance, ground2);
+        }
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");

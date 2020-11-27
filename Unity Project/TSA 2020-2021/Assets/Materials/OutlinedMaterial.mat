@@ -151,7 +151,7 @@ Material:
     - Color_EC871B1B: {r: 1, g: 1, b: 1, a: 0}
     - Vector4_F9CB1614: {r: 5, g: 5, b: 5, a: 5}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _Color: {r: 0.5283019, g: 0.41592273, b: 0.36133856, a: 1}
+    - _Color: {r: 0.6132076, g: 0.5059164, b: 0.45412073, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
