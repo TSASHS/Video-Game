@@ -24,7 +24,7 @@ public class TutorialMainScript : MonoBehaviour
     public Camera mainCamera, interactCamera0;
 
     public bool challengeCompleted = false;
-    public Animator animator;
+    public Animator animator, animator2;
     public List<GameObject> cubeList = new List<GameObject>();
     public List<Image> circleList = new List<Image>();
     private bool challenge = false;
@@ -38,7 +38,7 @@ public class TutorialMainScript : MonoBehaviour
     public Vector3 fallVelocity;
     public float jumpHeight = 3f;
     public Transform groundCheck;
-    public float groundDistance = 1.2f;
+    public float groundDistance = 0.00000000000000001f;
     public LayerMask ground;
     public LayerMask ground2;
     public bool onGround = true;
@@ -92,10 +92,10 @@ public class TutorialMainScript : MonoBehaviour
         }
         Tutorial();
         LightFLicker();
-        if(enteredRoom == false && Physics.CheckSphere(groundCheck.position, groundDistance/2, ground2) == true){
+        if(enteredRoom == false && Physics.CheckSphere(groundCheck.position, groundDistance, ground2) == true){
             print("enteredRoom");
             enteredRoom = true;
-            animator.SetBool("InRoom", true);
+            animator2.SetBool("InRoom", true);
         }
     }
     void Tutorial ()
