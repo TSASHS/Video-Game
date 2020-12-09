@@ -20,9 +20,9 @@ public class TutorialMainScript : MonoBehaviour
     float secondCount = 0;
     public bool interactable0;
     public GameObject eText;
-    public LayerMask interactableLayer, cubes;
+    public LayerMask interactableLayer, cubes, endTunnel;
     public Camera mainCamera, interactCamera0;
-
+    public Transform torchLightPos;
     public bool challengeCompleted = false;
     public Animator animator, animator2;
     public List<GameObject> cubeList = new List<GameObject>();
@@ -50,6 +50,8 @@ public class TutorialMainScript : MonoBehaviour
     public List<Texture2D> pictureTextureList = new List<Texture2D>();
     public Light torchLight;
     private bool enteredRoom = false;
+    public SceneChanger _SceneChanger;
+    float y;
     // Start is called before the first frame update
     // Update is called once per frame
     void Start()
@@ -57,7 +59,7 @@ public class TutorialMainScript : MonoBehaviour
         playerCamera = player.transform.GetChild(2).gameObject;
         tutorialText = tutorialSprite.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         tutorialSprite.SetActive(true);
-
+        y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
         controller.transform.GetChild(0).gameObject.SetActive(false);
         pictureRandomDict.Add(0,5);
         pictureRandomDict.Add(1,0);
@@ -80,6 +82,7 @@ public class TutorialMainScript : MonoBehaviour
             cubeList[i].GetComponent<Renderer>().material.SetTexture("_Spec", pictureTextureList[pictureRandomDict[i]+27]);
             cubeList[i].GetComponent<Puzzle1Cube>().node.pos = cubeList[i].transform.position;
         }
+        torchLightPos = torchLight.transform;
     }
     void Update()
     {
@@ -88,7 +91,9 @@ public class TutorialMainScript : MonoBehaviour
         eTextFunc();
         if(challenge != true){
             LookAround();
-            Movement();
+            if(tutorialStage > 0){
+                Movement();
+            }
         }
         Tutorial();
         LightFLicker();
@@ -97,6 +102,10 @@ public class TutorialMainScript : MonoBehaviour
             enteredRoom = true;
             animator2.SetBool("InRoom", true);
         }
+        if(Physics.CheckSphere(groundCheck.position, groundDistance, endTunnel) == true){
+            LeaveRoom();
+        }
+
     }
     void Tutorial ()
     {
@@ -298,12 +307,37 @@ public class TutorialMainScript : MonoBehaviour
     void LookAround()
     {
         float x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime - y;
         
-        y2 -= y;
-        y2 = Mathf.Clamp(y2, -90f, 90f);
+            y2 -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            y2 = Mathf.Clamp(y2, -90f, 90f);
+        
+        y = y2;
 
-        mainCamera.gameObject.transform.localRotation = Quaternion.Euler(y2 - start, 0f, 0f);
+        bool yChanged = true;
+        if(y > 0){
+            if(Physics.Raycast(torchLightPos.position, torchLightPos.forward, 0.02f)){
+                yChanged = false;
+            }
+        }else{
+            if(Physics.Raycast(torchLightPos.position, -torchLightPos.forward, 0.02f)){
+                yChanged = false;
+            }
+        }
+
+        if(x>0){
+            if(Physics.Raycast(torchLightPos.position, torchLightPos.right, 0.01f)){
+                x = 0;
+            }
+        }else {
+            if(Physics.Raycast(torchLightPos.position, -torchLightPos.right, 0.01f)){
+                x = 0;
+            }
+        }
+
+        if(yChanged == true){
+            mainCamera.gameObject.transform.localRotation = Quaternion.Euler(y2 - start, 0f, 0f);
+        }
         mainCamera.gameObject.transform.parent.Rotate(Vector3.up * x);
     }
     void Movement()
@@ -318,6 +352,16 @@ public class TutorialMainScript : MonoBehaviour
 
         Vector3 movementVector = controller.transform.right * x + controller.transform.forward * y;
 
+        if(movementVector.y > 0){
+            if(Physics.Raycast(torchLightPos.position, -torchLightPos.up, 0.01f)){
+                movementVector.y = 0;
+            }
+        }else{
+            if(Physics.Raycast(torchLightPos.position, torchLightPos.up, 0.01f)){
+                movementVector.y = 0;
+            }
+        }
+
         fallVelocity.y -= gravity * Time.deltaTime;
         
         if(onGround && fallVelocity.y < 0){
@@ -330,6 +374,11 @@ public class TutorialMainScript : MonoBehaviour
 
         controller.Move(movementVector * speed *  Time.deltaTime);
     }
+    void LeaveRoom()
+    {
+        _SceneChanger.sceneChange("Level 1");
+    }
 
 }
+
 //afe

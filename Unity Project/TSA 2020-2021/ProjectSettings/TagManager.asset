@@ -22,11 +22,11 @@ TagManager:
   - Cieling
   - Cubes
   - EndTunnel
+  - WalkTo
   - 
   - 
-  - 
-  - Torch
-  - 
+  - FPS
+  - PostProcess
   - 
   - 
   - 
