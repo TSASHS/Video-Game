@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour
 {
@@ -6,14 +7,16 @@ public class Main : MonoBehaviour
     public Camera mainCamera;
     public float mouseSensitivity, groundDistance, gravity, jumpHeight, speed;
     private float y2 = 0;
-    private bool onGround, torch, challengeCompleted;
+    private bool onGround, torch, challengeCompleted, pause;
     public LayerMask ground, interactable;
     public Transform groundCheck;
     public Vector3 movementVector, fallVelocity;
+    public List<Animator> animators = new List<Animator>();
+    public List<bool> onOffList = new List<bool>();
     private Transform torchLightPos;
     private float tick = 0;
     public Light torchLight;
-    public GameObject eSprite;
+    public GameObject eSprite, pauseMenu, cursor, walkingAudioObject;
     public SceneChanger _SceneChanger;
 
     void Start ()
@@ -21,12 +24,51 @@ public class Main : MonoBehaviour
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         torchLightPos = torchLight.transform;
+        challengeCompleted = false;
+        pause = false;
     }
     void Update ()
     {
         tick++;
         LookAround();
         Movement();
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+        ESpriteFunc();
+        int trueCount = 0;
+        foreach(bool b in onOffList){
+            if(b == true)
+            {
+                trueCount ++;
+            }
+        }
+        if (trueCount == 5){
+            print("Challenge Complete");
+        }
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            walkingAudioObject.SetActive(true);
+        }else {
+            walkingAudioObject.SetActive(false);  
+        }
+        LightFLicker();
+    }
+
+    void Pause()
+    {
+        pause = !pause;
+        pauseMenu.SetActive(pause);
+        if(pause==true){
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            cursor.SetActive(false);
+        }else{
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            cursor.SetActive(true);
+        }
     }
     void LookAround()
     {
@@ -83,11 +125,35 @@ public class Main : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hit, 2f,interactable)){
+        if(Physics.Raycast(ray, out hit, 20f,interactable)){
             if(hit.transform.gameObject.GetComponent<InteractableObj>().interactable == true && challengeCompleted == false){
+                GameObject selectedObj = hit.transform.gameObject;
+                InteractableObj selectedObjInteractable = selectedObj.GetComponent<InteractableObj>();
+                int id = selectedObjInteractable.id;
                 eSprite.SetActive(true);
                 if(Input.GetKeyDown(KeyCode.E)){
-                    //puzzleCode
+                    print("z");
+                    bool currentState = animators[id].GetBool("LeverDown");
+                    animators[id].SetBool("LeverDown", !currentState);
+                    onOffList[id] = !onOffList[id];
+                    if(id != 0){
+                        currentState = animators[id - 1].GetBool("LeverDown");
+                        animators[id - 1].SetBool("LeverDown", !currentState);
+                        onOffList[id - 1] = !onOffList[id - 1];   
+                    }else{
+                        currentState = animators[4].GetBool("LeverDown");
+                        animators[4].SetBool("LeverDown", !currentState);
+                        onOffList[4] = !onOffList[4];                        
+                    }
+                    if(id != 4){
+                        currentState = animators[id + 1].GetBool("LeverDown");
+                        animators[id + 1].SetBool("LeverDown", !currentState);
+                        onOffList[id + 1] = !onOffList[id + 1];   
+                    }else{
+                        currentState = animators[0].GetBool("LeverDown");
+                        animators[0].SetBool("LeverDown", !currentState);
+                        onOffList[0] = !onOffList[0];                        
+                    }
                 }
             }
         }else{

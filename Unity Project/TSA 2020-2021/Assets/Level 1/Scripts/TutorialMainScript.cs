@@ -200,6 +200,7 @@ public class TutorialMainScript : MonoBehaviour
     {
         if(moving == true)
         {
+            cubeList[1].GetComponent<AudioSource>().Play();
             Vector3 oldPos = blueCube.transform.position;
             Vector3 newPos = blueCube.GetComponent<Puzzle1Cube>().node.pos;
             if(oldPos != newPos){
@@ -220,7 +221,10 @@ public class TutorialMainScript : MonoBehaviour
             }else{
                 moving = false;
                 blueCube = null;
+                
             }
+        }else{
+            cubeList[1].GetComponent<AudioSource>().Stop();
         }
         challenge = interactable0;
         if(challenge == true){
@@ -397,5 +401,3 @@ public class TutorialMainScript : MonoBehaviour
         print(animator1.GetBool("Torch"));
     }
 }
-
-//afe
