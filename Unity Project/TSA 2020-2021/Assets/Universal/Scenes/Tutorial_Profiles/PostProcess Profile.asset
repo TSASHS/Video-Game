@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
   m_Name: PostProcess Profile
   m_EditorClassIdentifier: 
-  settings:
-  - {fileID: 8665043160536197958}
+  settings: []
 --- !u!114 &8665043160536197958
 MonoBehaviour:
   m_ObjectHideFlags: 3
