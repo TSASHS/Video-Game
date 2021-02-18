@@ -116,8 +116,8 @@ public class Main : MonoBehaviour
     {
         if(tick == 5){
             tick = 0;
-            float intensity = torchLight.intensity + Random.Range(-0.003f,0.003f);
-            intensity = Mathf.Clamp(intensity, 0.03f, 0.05f);
+            float intensity = torchLight.intensity + Random.Range(-0.01f,0.01f);
+            intensity = Mathf.Clamp(intensity, 0.25f, 0.75f);
             torchLight.intensity = intensity;
         }
     }
