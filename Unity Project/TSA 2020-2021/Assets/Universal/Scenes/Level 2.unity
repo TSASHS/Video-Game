@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6642299686191661947}
   mainCamera: {fileID: 6642299686006350468}
-  mouseSensitivity: 160
+  mouseSensitivity: 200
   groundDistance: 1
   gravity: 10
   jumpHeight: 0
