@@ -7,7 +7,7 @@ public class Main : MonoBehaviour
     public Camera mainCamera;
     public float mouseSensitivity, groundDistance, gravity, jumpHeight, speed;
     private float y2 = 0;
-    private bool onGround, torch, challengeCompleted, pause;
+    private bool onGround, torch, challengeCompleted, pause, timeDone;
     public LayerMask ground, interactable;
     public Transform groundCheck;
     public Vector3 movementVector, fallVelocity;
@@ -15,6 +15,7 @@ public class Main : MonoBehaviour
     public List<bool> onOffList = new List<bool>();
     private Transform torchLightPos;
     private float tick = 0;
+    private List<float> timeList = new List<float>();
     public Light torchLight;
     public GameObject eSprite, pauseMenu, cursor, walkingAudioObject;
     public SceneChanger _SceneChanger;
@@ -135,10 +136,14 @@ public class Main : MonoBehaviour
                     print("z");
                     bool currentState = animators[id].GetBool("LeverDown");
                     animators[id].SetBool("LeverDown", !currentState);
+                    animators[id + 5].SetBool("LeverDown", !currentState);
+                    animators[id+10].SetBool("LeverDown", !currentState);
                     onOffList[id] = !onOffList[id];
                     if(id != 0){
                         currentState = animators[id - 1].GetBool("LeverDown");
                         animators[id - 1].SetBool("LeverDown", !currentState);
+                        animators[id + 4].SetBool("LeverDown", !currentState);
+                        animators[id + 9].SetBool("LeverDown", !currentState);
                         onOffList[id - 1] = !onOffList[id - 1];   
                     }else{
                         currentState = animators[4].GetBool("LeverDown");
