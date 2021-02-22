@@ -11,6 +11,7 @@ public class Main : MonoBehaviour
     public LayerMask ground, interactable;
     public Transform groundCheck;
     public Vector3 movementVector, fallVelocity;
+    public Animator torchAnim;
     public List<Animator> animators = new List<Animator>();
     public List<bool> onOffList = new List<bool>();
     private Transform torchLightPos;
@@ -55,6 +56,9 @@ public class Main : MonoBehaviour
             walkingAudioObject.SetActive(false);  
         }
         LightFLicker();
+        if(Input.GetKeyDown(KeyCode.T)){
+            Torch();
+        }
     }
 
     void Pause()
@@ -165,13 +169,13 @@ public class Main : MonoBehaviour
             eSprite.SetActive(false);
         }
     }
-    /*void Torch()
+    void Torch()
     {
         torch = !torch;
         print(torch);
-        animator1.SetBool("Torch", torch);
-        print(animator1.GetBool("Torch"));
-    }*/
+        torchAnim.SetBool("Torch", torch);
+        print(torchAnim.GetBool("Torch"));
+    }
     void LeaveRoom()
     {
        _SceneChanger.sceneChange("Level 3");
