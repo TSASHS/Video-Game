@@ -142,25 +142,36 @@ public class Main : MonoBehaviour
                     animators[id].SetBool("LeverDown", !currentState);
                     animators[id + 5].SetBool("LeverDown", !currentState);
                     animators[id+10].SetBool("LeverDown", !currentState);
+                    animators[id+15].SetBool("LeverDown", !currentState);
                     onOffList[id] = !onOffList[id];
                     if(id != 0){
                         currentState = animators[id - 1].GetBool("LeverDown");
                         animators[id - 1].SetBool("LeverDown", !currentState);
                         animators[id + 4].SetBool("LeverDown", !currentState);
                         animators[id + 9].SetBool("LeverDown", !currentState);
+                        animators[id + 14].SetBool("LeverDown", !currentState);
                         onOffList[id - 1] = !onOffList[id - 1];   
                     }else{
                         currentState = animators[4].GetBool("LeverDown");
                         animators[4].SetBool("LeverDown", !currentState);
+                        animators[9].SetBool("LeverDown", !currentState);
+                        animators[14].SetBool("LeverDown", !currentState);
+                        animators[19].SetBool("LeverDown", !currentState);
                         onOffList[4] = !onOffList[4];                        
                     }
                     if(id != 4){
                         currentState = animators[id + 1].GetBool("LeverDown");
                         animators[id + 1].SetBool("LeverDown", !currentState);
-                        onOffList[id + 1] = !onOffList[id + 1];   
+                        onOffList[id + 1] = !onOffList[id + 1];
+                        animators[id + 6].SetBool("LeverDown", !currentState);
+                        animators[id + 11].SetBool("LeverDown", !currentState);
+                        animators[id + 16].SetBool("LeverDown", !currentState);   
                     }else{
                         currentState = animators[0].GetBool("LeverDown");
                         animators[0].SetBool("LeverDown", !currentState);
+                        animators[5].SetBool("LeverDown", !currentState);
+                        animators[10].SetBool("LeverDown", !currentState);
+                        animators[15].SetBool("LeverDown", !currentState);
                         onOffList[0] = !onOffList[0];                        
                     }
                 }
