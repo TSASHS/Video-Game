@@ -23,7 +23,7 @@ TagManager:
   - Cubes
   - EndTunnel
   - WalkTo
-  - 
+  - Player
   - 
   - FPS
   - PostProcess

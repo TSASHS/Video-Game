@@ -48,6 +48,7 @@ public class Main : MonoBehaviour
         }
         if (trueCount == 5){
             print("Challenge Complete");
+            animators[20].SetBool("ChallengeCompleted", true);
         }
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
@@ -139,10 +140,11 @@ public class Main : MonoBehaviour
                 if(Input.GetKeyDown(KeyCode.E)){
                     print("z");
                     bool currentState = animators[id].GetBool("LeverDown");
+                    bool leverState = animators[id + 15].GetBool("LeverDown");
+                    animators[id+15].SetBool("LeverDown", !leverState);
                     animators[id].SetBool("LeverDown", !currentState);
                     animators[id + 5].SetBool("LeverDown", !currentState);
                     animators[id+10].SetBool("LeverDown", !currentState);
-                    animators[id+15].SetBool("LeverDown", !currentState);
                     onOffList[id] = !onOffList[id];
                     if(id != 0){
                         currentState = animators[id - 1].GetBool("LeverDown");
@@ -183,7 +185,7 @@ public class Main : MonoBehaviour
         torchAnim.SetBool("Torch", torch);
         print(torchAnim.GetBool("Torch"));
     }
-    void LeaveRoom()
+    public void LeaveRoom()
     {
        _SceneChanger.sceneChange("Level 3");
     }
