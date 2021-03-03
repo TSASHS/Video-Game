@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Universal/Scenes/Tutorial.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Universal/Scenes/Loading - Copy.unity
+    guid: af1a929a50b0ac5479cd9d10f43711fc
+  - enabled: 1
     path: Assets/Universal/Scenes/Level 2.unity
     guid: 271a3d4e8adc38748a6f9fbc43e7ef38
   - enabled: 1

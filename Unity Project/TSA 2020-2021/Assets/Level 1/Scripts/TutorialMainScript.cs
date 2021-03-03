@@ -391,7 +391,7 @@ public class TutorialMainScript : MonoBehaviour
     }
     void LeaveRoom()
     {
-        _SceneChanger.sceneChange("Level 2");
+        _SceneChanger.sceneChange("Loading - Copy");
     }
     void Torch()
     {

@@ -95,9 +95,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Vector2_6C5C2F06: {r: 7, g: 15, b: 1, a: 1}
-    - Vector2_9FA92812: {r: 0, g: 0.071, b: 43.1, a: 0}
+    - Vector2_9FA92812: {r: 0, g: 1, b: 43.1, a: 0}
     - Vector2_B0DE5A8D: {r: 0, g: 0, b: 0, a: 0}
-    - Vector4_54CBCBB4: {r: 1, g: 1, b: 1, a: 1}
+    - Vector4_54CBCBB4: {r: 5, g: 1, b: 1, a: 1}
     - Vector4_F5B9D19: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
