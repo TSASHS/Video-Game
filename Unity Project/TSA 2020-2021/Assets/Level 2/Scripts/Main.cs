@@ -52,8 +52,10 @@ public class Main : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
+            torchAnim.SetBool("Walking", true);
             walkingAudioObject.SetActive(true);
         }else {
+            torchAnim.SetBool("Walking", false);
             walkingAudioObject.SetActive(false);  
         }
         LightFLicker();
@@ -180,9 +182,10 @@ public class Main : MonoBehaviour
     }
     void Torch()
     {
-        torch = !torch;
+        torch = !torchAnim.GetBool("Torch");
         print(torch);
         torchAnim.SetBool("Torch", torch);
+        torchAnim.SetBool("b", true);
         print(torchAnim.GetBool("Torch"));
     }
     public void LeaveRoom()

@@ -4,7 +4,7 @@ public class Loading : MonoBehaviour
 {
     public string sceneName;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }

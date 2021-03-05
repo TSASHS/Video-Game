@@ -8,8 +8,11 @@ public class dontDestroy : MonoBehaviour
     void Awake()
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("music");
-        if(objs.Length > 1)
+        print (objs.Length);
+        if(objs.Length > 1){
+            print ("yes");
             Destroy(this.gameObject);
+        }
         DontDestroyOnLoad(this);
     }
 }
