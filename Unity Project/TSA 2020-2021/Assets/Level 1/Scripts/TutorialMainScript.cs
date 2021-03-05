@@ -15,8 +15,8 @@ public class TutorialMainScript : MonoBehaviour
     public TextMeshProUGUI wText, aText, sText, dText;
     public GameObject textObjHolder;
     public LayerMask walkToMask;
-    int tutorialStage = 0;
-    bool secondCountBool, wClicked, aClicked, dClicked, sClicked = false;
+    public int tutorialStage = 0;
+    public bool secondCountBool, wClicked, aClicked, dClicked, sClicked = false;
     float secondCount = 0;
     public bool interactable0;
     public GameObject eText;
@@ -91,8 +91,10 @@ public class TutorialMainScript : MonoBehaviour
         Challenge1();
         eTextFunc();
         if(challenge != true){
-            LookAround();
             if(tutorialStage > 0){
+                LookAround();
+            }
+            if(tutorialStage > 1){
                 Movement();
             }
         }
@@ -106,21 +108,28 @@ public class TutorialMainScript : MonoBehaviour
         if(Physics.CheckSphere(groundCheck.position, groundDistance, endTunnel) == true){
             LeaveRoom();
         }
-        if(Input.GetKeyDown(KeyCode.T) && tutorialStage > 1){
+        if(Input.GetKeyDown(KeyCode.T) && tutorialStage > 2){
             Torch();
         }
     }
     void Tutorial ()
     {
-
         if(tutorialStage == 0){
+            tutorialText.text = "Press the escape key to pause the game";
+            if(Input.GetKeyDown(KeyCode.Escape)){
+                secondCountBool = true;
+                tutorialText.color = Color.green;
+            }
+        }
+
+        if(tutorialStage == 1){
             tutorialText.text = "Move the cursor to look around";
             if(Mathf.Abs(player.transform.rotation.y) > 5/360|| Mathf.Abs(playerCamera.transform.localRotation.x) > 5/360){
                 secondCountBool = true;
                 tutorialText.color = Color.green;
             }
         }
-        if(tutorialStage == 1){
+        if(tutorialStage == 2){
             textObjHolder.SetActive(true);
             tutorialText.text = "Use the          keys to move";
             if(Input.GetKeyDown(KeyCode.W)){
@@ -146,7 +155,7 @@ public class TutorialMainScript : MonoBehaviour
         }else{
             textObjHolder.SetActive(false);
         }
-        if(tutorialStage == 2){
+        if(tutorialStage == 3){
             textObjHolder.SetActive(false);
             tutorialText.text = "Press t to light or extinguish your torch";
             if(Input.GetKeyDown(KeyCode.T)){
@@ -154,7 +163,7 @@ public class TutorialMainScript : MonoBehaviour
                 secondCountBool = true;
             }
         }
-        if(tutorialStage == 3){
+        if(tutorialStage == 4){
             circleOnGround.SetActive(true);
             tutorialText.text = "Walk to the marked location";
             if(Physics.CheckSphere(groundCheck.position, groundDistance, walkToMask)){
@@ -164,17 +173,17 @@ public class TutorialMainScript : MonoBehaviour
         }else{
             circleOnGround.SetActive(false);
         }
-        if(tutorialStage == 4){
+        if(tutorialStage == 5){
             tutorialText.text = "Click E to interact with the picture";
             if(challenge == true){
                 tutorialText.color = Color.green;
                 secondCountBool = true;
             }
         }
-        if(tutorialStage == 5){
+        if(tutorialStage == 6){
             tutorialText.text = "Rearrange the blocks to form the picture";
         }
-        if(tutorialStage == 6){
+        if(tutorialStage == 7){
             tutorialText.text = "Walk through the tunnel to the next room";
         }
         if(secondCountBool == true){
@@ -399,5 +408,9 @@ public class TutorialMainScript : MonoBehaviour
         print(torch);
         animator1.SetBool("Torch", torch);
         print(animator1.GetBool("Torch"));
+    }
+    public void SavePlayer ()
+    {
+        SaveSystem.SavePlayer(this);
     }
 }

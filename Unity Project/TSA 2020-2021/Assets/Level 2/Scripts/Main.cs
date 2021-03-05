@@ -14,6 +14,7 @@ public class Main : MonoBehaviour
     public Animator torchAnim;
     public List<Animator> animators = new List<Animator>();
     public List<bool> onOffList = new List<bool>();
+    public List<bool> leverList = new List<bool>();
     private Transform torchLightPos;
     private float tick = 0;
     private List<float> timeList = new List<float>();
@@ -148,6 +149,7 @@ public class Main : MonoBehaviour
                     animators[id + 5].SetBool("LeverDown", !currentState);
                     animators[id+10].SetBool("LeverDown", !currentState);
                     onOffList[id] = !onOffList[id];
+                    leverList[id] = !leverList[id];
                     if(id != 0){
                         currentState = animators[id - 1].GetBool("LeverDown");
                         animators[id - 1].SetBool("LeverDown", !currentState);
@@ -191,5 +193,9 @@ public class Main : MonoBehaviour
     public void LeaveRoom()
     {
        _SceneChanger.sceneChange("Level 3");
+    }
+    public void SavePlayer ()
+    {
+        SaveSystem.SavePlayer(this);
     }
 }
