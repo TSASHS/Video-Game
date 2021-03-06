@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class Main : MonoBehaviour
 {
@@ -21,7 +22,8 @@ public class Main : MonoBehaviour
     public Light torchLight;
     public GameObject eSprite, pauseMenu, cursor, walkingAudioObject;
     public SceneChanger _SceneChanger;
-
+    public TMP_InputField inputField;
+    public GameObject confirmObj;
     void Start ()
     {   
         Time.timeScale = 1;
@@ -196,6 +198,12 @@ public class Main : MonoBehaviour
     }
     public void SavePlayer ()
     {
-        SaveSystem.SavePlayer(this);
+        SaveSystem.SavePlayer(this, inputField.text, confirmObj);
+        inputField.transform.parent.gameObject.SetActive(false);
+    }
+    public void ConfirmSavePlayer ()
+    {
+        SaveSystem.SavePlayer(this, inputField.text);
+        confirmObj.transform.parent.gameObject.SetActive(false);  
     }
 }

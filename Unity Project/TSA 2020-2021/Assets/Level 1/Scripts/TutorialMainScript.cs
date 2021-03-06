@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
-using UnityStandardAssets;
+using System.IO;
 
 public class TutorialMainScript : MonoBehaviour
 {
@@ -53,6 +53,8 @@ public class TutorialMainScript : MonoBehaviour
     public SceneChanger _SceneChanger;
     float y;
     private bool torch = true;
+    public TMP_InputField inputField;
+    public GameObject confirmObj;
     // Start is called before the first frame update
     // Update is called once per frame
     void Start()
@@ -411,6 +413,15 @@ public class TutorialMainScript : MonoBehaviour
     }
     public void SavePlayer ()
     {
-        SaveSystem.SavePlayer(this);
+        SaveSystem.SavePlayer(this, inputField.text, confirmObj);
+        inputField.transform.parent.gameObject.SetActive(false);
+        if(File.Exists(Application.persistentDataPath + "/saves/" + inputField.text + ".fun")){
+            print("yeah");
+        }
+    }
+    public void ConfirmSavePlayer ()
+    {
+        SaveSystem.SavePlayer(this, inputField.text);
+        confirmObj.transform.parent.gameObject.SetActive(false);
     }
 }

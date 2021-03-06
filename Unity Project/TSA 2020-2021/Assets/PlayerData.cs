@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
-public class PlayerData : MonoBehaviour
+public class PlayerData 
 {
     public int level;
-    public float[] position;
-    public float[] rotation;
+    public float[] position = new float [3];
+    public float[] rotation = new float [4];
     public int tutorialStage = 0;
     public string[] buttonsClicked;
-    public Dictionary<int, float[]> firstLevelBoxPositions;
+    public Dictionary<int, float[]> firstLevelBoxPositions = new Dictionary<int, float[]>();
     public Dictionary<int, bool> levelTwoPositions;
     public Dictionary<int, bool> leverPositions;
     public bool torchState;
-
     public PlayerData (Main level2Main){
         level = SceneManager.GetActiveScene().buildIndex;
         Vector3 transform;
@@ -43,19 +42,20 @@ public class PlayerData : MonoBehaviour
         tutorialStage = tutorialMain.tutorialStage;
         if(tutorialStage == 2){
             if(tutorialMain.wClicked == true){
-                buttonsClicked[buttonsClicked.Length] = "w";
+                buttonsClicked[buttonsClicked.Length - 1] = "w";
             }
             if(tutorialMain.aClicked == true){
-                buttonsClicked[buttonsClicked.Length] = "a";
+                buttonsClicked[buttonsClicked.Length - 1] = "a";
             }
             if(tutorialMain.sClicked == true){
-                buttonsClicked[buttonsClicked.Length] = "s";
+                buttonsClicked[buttonsClicked.Length - 1] = "s";
             }
             if(tutorialMain.dClicked == true){
-                buttonsClicked[buttonsClicked.Length] = "d";
+                buttonsClicked[buttonsClicked.Length - 1] = "d";
             }
         }
         for(int i = 0; i < tutorialMain.cubeList.Count; i ++){
+            firstLevelBoxPositions.Add(i, new float[3]);
             firstLevelBoxPositions[i][0] = tutorialMain.cubeList[i].transform.position.x;
             firstLevelBoxPositions[i][1] = tutorialMain.cubeList[i].transform.position.y;
             firstLevelBoxPositions[i][2] = tutorialMain.cubeList[i].transform.position.z;
