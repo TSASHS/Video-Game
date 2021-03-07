@@ -12,9 +12,12 @@ public class PlayerData
     public int tutorialStage = 0;
     public string[] buttonsClicked;
     public Dictionary<int, float[]> firstLevelBoxPositions = new Dictionary<int, float[]>();
-    public Dictionary<int, bool> levelTwoPositions;
-    public Dictionary<int, bool> leverPositions;
+    public Dictionary<int, bool> levelTwoPositions = new Dictionary <int, bool>();
+    public Dictionary<int, bool> leverPositions = new Dictionary<int, bool>();
     public bool torchState;
+    public bool tutorialDoor;
+    public bool tutorialDoor2;
+    public bool level2Floor;
     public PlayerData (Main level2Main){
         level = SceneManager.GetActiveScene().buildIndex;
         Vector3 transform;
@@ -32,6 +35,7 @@ public class PlayerData
         rotation[1] = rotate.x;
         rotation[2] = rotate.y;
         rotation[3] = rotate.z;
+        level2Floor = level2Main.challengeCompleted;
     }
         public PlayerData (TutorialMainScript tutorialMain){
         level = SceneManager.GetActiveScene().buildIndex;
@@ -67,5 +71,7 @@ public class PlayerData
         rotation[1] = rotate.x;
         rotation[2] = rotate.y;
         rotation[3] = rotate.z;
+        tutorialDoor2 = tutorialMain.challengeCompleted;
+        tutorialDoor = tutorialMain.enteredRoom;
     }
 }

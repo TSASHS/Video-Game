@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class SceneChanger2 : MonoBehaviour
 {
@@ -63,8 +64,17 @@ public class SceneChanger2 : MonoBehaviour
             saveFiles = Directory.GetFiles(Application.persistentDataPath + "/saves");
         }
     }
-    public void LoadGame(TextMeshProUGUI text)
+    public void LoadGame()
     {
-        PlayerData data = SaveSystem.LoadPlayer(text);
+        string file = EventSystem.current.currentSelectedGameObject.GetComponent<TextMeshProUGUI>().text;
+        PlayerData data = SaveSystem.LoadPlayer(file);
+
+        if (data.level == 1){
+        //stuff
+        }else if (data.level == 2){
+        //other stuff
+        }else if(data.level ==3){
+        //better stuff
+        }
     }
 }

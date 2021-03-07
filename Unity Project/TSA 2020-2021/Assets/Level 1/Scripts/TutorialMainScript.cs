@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 using System.IO;
+using UnityEngine.EventSystems;
 
 public class TutorialMainScript : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class TutorialMainScript : MonoBehaviour
     private Dictionary<int, int> pictureRandomDict = new Dictionary<int, int>();
     public List<Texture2D> pictureTextureList = new List<Texture2D>();
     public Light torchLight;
-    private bool enteredRoom = false;
+    public bool enteredRoom = false;
     public SceneChanger _SceneChanger;
     float y;
     private bool torch = true;

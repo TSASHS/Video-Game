@@ -8,7 +8,8 @@ public class Main : MonoBehaviour
     public Camera mainCamera;
     public float mouseSensitivity, groundDistance, gravity, jumpHeight, speed;
     private float y2 = 0;
-    private bool onGround, torch, challengeCompleted, pause, timeDone;
+    private bool onGround, torch, pause, timeDone;
+    public bool challengeCompleted;
     public LayerMask ground, interactable;
     public Transform groundCheck;
     public Vector3 movementVector, fallVelocity;
@@ -50,6 +51,7 @@ public class Main : MonoBehaviour
             }
         }
         if (trueCount == 5){
+            challengeCompleted = true;
             print("Challenge Complete");
             animators[20].SetBool("ChallengeCompleted", true);
         }

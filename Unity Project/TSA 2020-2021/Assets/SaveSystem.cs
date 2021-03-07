@@ -65,9 +65,9 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
-    public static PlayerData LoadPlayer (TextMeshProUGUI text)
+    public static PlayerData LoadPlayer (string text)
     {
-        string path = Application.persistentDataPath + "/saves/" + text.text +".fun";
+        string path = Application.persistentDataPath + "/saves/" + text + ".fun";
         if(File.Exists(path)){
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
