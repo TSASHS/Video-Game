@@ -9,7 +9,7 @@ public class LevelMain : MonoBehaviour
     public float mouseSensitivity, groundDistance;
     public LayerMask ground;
     public Camera mainCamera;
-    public CharacterController character;
+    public CharacterController controller;
     public Transform groundCheck;
 
     //Load Game functions in Awake Function
