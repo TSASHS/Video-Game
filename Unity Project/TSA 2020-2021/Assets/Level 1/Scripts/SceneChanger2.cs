@@ -18,6 +18,7 @@ public class SceneChanger2 : MonoBehaviour
     }
     void Start()
     {
+        print(Application.dataPath);
         GetLoadFiles();
     }
     void Update()
@@ -69,12 +70,17 @@ public class SceneChanger2 : MonoBehaviour
         string file = EventSystem.current.currentSelectedGameObject.GetComponent<TextMeshProUGUI>().text;
         PlayerData data = SaveSystem.LoadPlayer(file);
 
-        if (data.level == 1){
-        //stuff
-        }else if (data.level == 2){
-        //other stuff
-        }else if(data.level ==3){
-        //better stuff
-        }
+        GameObject newObj = Instantiate(new GameObject("loadData"), new Vector3(0,0,0), new Quaternion(0,0,0,0));
+        
+        newObj.AddComponent(typeof (StorageClass));
+        newObj.GetComponent<StorageClass>().data = data;
+        DontDestroyOnLoad(newObj);
+        newObj.tag = "LoadSystem";
+
+        SceneManager.LoadScene(data.level);
     }
+}
+public class StorageClass : MonoBehaviour
+{
+    public PlayerData data;
 }

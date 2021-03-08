@@ -25,6 +25,23 @@ public class Main : MonoBehaviour
     public SceneChanger _SceneChanger;
     public TMP_InputField inputField;
     public GameObject confirmObj;
+    void Awake()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("LoadSystem");
+        if(objs.Length > 0){
+            PlayerData data = objs[0].GetComponent<StorageClass>().data;
+            Vector3 positon = new Vector3(data.position[0], data.position[1], data.position[2]);
+            Quaternion rotation = new Quaternion(data.rotation[1], data.rotation[2], data.rotation[3], data.rotation[0]);
+            Quaternion cameraRotation = new Quaternion(data.cameraRotation[1], data.cameraRotation[2], data.cameraRotation[3], data.cameraRotation[0]);
+            controller.enabled = false;
+            controller.transform.position = positon;
+            controller.enabled = true;
+            controller.transform.rotation = rotation;
+            controller.transform.GetChild(2).rotation = cameraRotation;
+            torchAnim.SetBool("Torch", data.torchState);
+
+        }
+    }
     void Start ()
     {   
         Time.timeScale = 1;

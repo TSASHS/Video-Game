@@ -10321,7 +10321,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9eaba40e80627c74c9d91ede6a6e7f85, type: 2}
-  - {fileID: 2100000, guid: 9eaba40e80627c74c9d91ede6a6e7f85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10617,7 +10616,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10670,7 +10669,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.9
+      scalar: 0.7
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -24933,6 +24932,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFiles: []
+  loadGameButton: {fileID: 0}
+  nameDisplay: {fileID: 0}
+  i: 1
+  Panel: {fileID: 0}
 --- !u!4 &1551622904
 Transform:
   m_ObjectHideFlags: 0
@@ -25073,6 +25076,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 004e4474b8e70eb45afc1f43f0ffccbd, type: 3}
   - {fileID: 2800000, guid: 68765e8195d60504f8dcc289f29fda11, type: 3}
   torchLight: {fileID: 1354431844}
+  enteredRoom: 0
   _SceneChanger: {fileID: 1551622906}
   inputField: {fileID: 344650299}
   confirmObj: {fileID: 1642289431}
@@ -25089,6 +25093,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFiles: []
+  loadGameButton: {fileID: 0}
+  nameDisplay: {fileID: 0}
+  i: 1
+  Panel: {fileID: 0}
 --- !u!1 &1577484597
 GameObject:
   m_ObjectHideFlags: 0
@@ -35141,7 +35149,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8896386690763531560}
   m_LocalRotation: {x: -0.5555702, y: 0, z: 0, w: 0.8314697}
-  m_LocalPosition: {x: 0.87, y: -3.21, z: 0.47}
+  m_LocalPosition: {x: 0.54, y: -2.858, z: 0.066}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 1872817927}

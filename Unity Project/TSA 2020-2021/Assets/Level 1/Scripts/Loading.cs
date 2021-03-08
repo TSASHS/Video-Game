@@ -8,6 +8,7 @@ public class Loading : MonoBehaviour
     void Update()
     {
         i += 1;
+        print (i);
         if(i >= 2){
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }   

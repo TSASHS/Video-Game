@@ -58,6 +58,58 @@ public class TutorialMainScript : MonoBehaviour
     public GameObject confirmObj;
     // Start is called before the first frame update
     // Update is called once per frame
+    void Awake()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("LoadSystem");
+        if(objs.Length > 0){
+            PlayerData data = objs[0].GetComponent<StorageClass>().data;
+            Vector3 positon = new Vector3(data.position[0], data.position[1], data.position[2]);
+            Quaternion rotation = new Quaternion(data.rotation[1], data.rotation[2], data.rotation[3], data.rotation[0]);
+            Quaternion cameraRotation = new Quaternion(data.cameraRotation[1], data.cameraRotation[2], data.cameraRotation[3], data.cameraRotation[0]);
+            controller.enabled = false;
+            controller.transform.position = positon;
+            controller.enabled = true;
+            controller.transform.rotation = rotation;
+            controller.transform.GetChild(2).rotation = cameraRotation;
+
+            tutorialStage = data.tutorialStage;
+
+            foreach(string s in data.buttonsClicked){
+                if(s == "w"){
+                    wClicked = true;
+                    wText.color = Color.green;
+                }else if (s == "a"){
+                    aClicked = true;
+                    aText.color = Color.green;
+                }else if (s == "s"){
+                    sText.color = Color.green;
+                    sClicked = true;
+                }else if (s == "d"){
+                    dText.color = Color.green;
+                    dClicked = true;
+                }
+            }
+            if(data.tutorialDoor2 == true){
+                animator.SetBool("ChallengeCompleted", true);
+            }
+            if(data.tutorialDoor == true){
+                animator2.gameObject.transform.position = new Vector3(-7.872f,0.519f,-0.1583f);
+            }
+
+            for(int i = 0; i < cubeList.Count; i++){
+                Puzzle1Node node = new Puzzle1Node();
+                Puzzle1Cube cube = cubeList[i].GetComponent<Puzzle1Cube>();
+                foreach(GameObject g in cubeList){
+                    if(g.GetComponent<Puzzle1Cube>().node.id == data.firstLevelBoxPositionsid[i]){
+                        node = g.GetComponent<Puzzle1Cube>().node;
+                    }
+                }
+                cube.node = node;
+                cubeList[i].transform.position = new Vector3(data.firstLevelBoxPositionsx[i], data.firstLevelBoxPositionsy[i], cubeList[i].transform.position.z);
+            }
+            animator1.SetBool("Torch", data.torchState);
+        }
+    }
     void Start()
     {
         playerCamera = player.transform.GetChild(2).gameObject;
@@ -113,6 +165,11 @@ public class TutorialMainScript : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.T) && tutorialStage > 2){
             Torch();
+        }
+        if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D)){
+            animator1.SetBool("Walking", true);
+        }else{
+            animator1.SetBool("Walking", false);
         }
     }
     void Tutorial ()
@@ -409,6 +466,7 @@ public class TutorialMainScript : MonoBehaviour
     {
         torch = !torch;
         print(torch);
+        animator1.SetBool("b", true);
         animator1.SetBool("Torch", torch);
         print(animator1.GetBool("Torch"));
     }
