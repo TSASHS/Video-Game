@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class LevelMain : MonoBehaviour
 {
-    private bool pause, onGround;
+    private bool pause;
+    public bool onGround;
     private float y2;
-    public float mouseSensitivity, groundDistance;
+    public float mouseSensitivity, groundDistance, lightGroundDistance, jumpHeight, gravity, speed;
+    public Vector3 fallVelocity;
     public LayerMask ground;
     public Camera mainCamera;
     public CharacterController controller;
+    public GameObject torchLight;
     public Transform groundCheck;
+    private Transform torchLightPos;
 
     //Load Game functions in Awake Function
     void Awake()
@@ -20,6 +24,7 @@ public class LevelMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        torchLightPos = torchLight.transform;
         Time.timeScale = 1;   
         Cursor.lockState = CursorLockMode.Locked;
         pause = false;        
@@ -32,8 +37,8 @@ public class LevelMain : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)){
             Pause();
         }
-        if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D)){
-            Movement();
+        Movement();
+        if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)){
         }
     }
     void Pause()
@@ -48,6 +53,21 @@ public class LevelMain : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         Vector3 movementVector = controller.transform.right * x + controller.transform.forward * y;
+        
+        print(movementVector.x);
+        print(movementVector.z);
+
+        fallVelocity.y -= gravity * Time.deltaTime;
+
+        if(onGround && fallVelocity.y < 0){
+            fallVelocity.y = 0f;
+        }
+        if(Input.GetButtonDown("Jump") && onGround){
+            fallVelocity.y = Mathf.Sqrt(jumpHeight * -2f * -gravity);
+        }
+        controller.Move(fallVelocity * Time.deltaTime);
+
+        controller.Move(movementVector * speed *  Time.deltaTime);
     }
     void Look()
     {
@@ -71,5 +91,12 @@ public class LevelMain : MonoBehaviour
     public void ConfirmSaveGame()
     {
 
+    }
+}
+public class collisionClass : Monobehaviour 
+{
+    void OnTriggerEnter()
+    {
+        //EndGame
     }
 }

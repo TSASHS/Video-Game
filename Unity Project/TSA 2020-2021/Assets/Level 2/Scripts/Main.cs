@@ -39,7 +39,18 @@ public class Main : MonoBehaviour
             controller.transform.rotation = rotation;
             controller.transform.GetChild(2).rotation = cameraRotation;
             torchAnim.SetBool("Torch", data.torchState);
-
+            if(data.level2Floor == true){
+                animators[20].SetBool("ChallengeCompleted", true);
+            }
+            for(int i = 0; i < 5; i++){
+                bool b = data.levelTwoPositions[i];
+                animators[i].SetBool("LeverDown", b);
+                animators[i+5].SetBool("LeverDown", b);
+                animators[i+10].SetBool("LeverDown", b);
+                onOffList[i] = b;
+                leverList[i] = data.leverPositions[i];
+                animators[i+15].SetBool("LeverDown", data.leverPositions[i]);
+            }
         }
     }
     void Start ()
