@@ -93,7 +93,7 @@ public class LevelMain : MonoBehaviour
 
     }
 }
-public class collisionClass : Monobehaviour 
+public class collisionClass : MonoBehaviour 
 {
     void OnTriggerEnter()
     {
