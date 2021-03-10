@@ -12,7 +12,7 @@ public class LevelMain : MonoBehaviour
     public LayerMask ground;
     public Camera mainCamera;
     public CharacterController controller;
-    public GameObject torchLight;
+    public GameObject torchLight, walkingAudio;
     public Transform groundCheck;
     private Transform torchLightPos;
 
@@ -38,7 +38,13 @@ public class LevelMain : MonoBehaviour
             Pause();
         }
         Movement();
-        if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)){
+        if((Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)) && onGround){
+            walkingAudio.SetActive(true);
+        }else{
+            walkingAudio.SetActive(false);
+        }
+        if(Input.GetKeyDown(KeyCode.T)){
+            Torch();
         }
     }
     void Pause()
