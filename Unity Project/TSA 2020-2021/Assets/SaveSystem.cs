@@ -41,6 +41,24 @@ public static class SaveSystem
             confirmObj.transform.parent.gameObject.SetActive(false);        
         }
     }
+    public static void SavePlayer (LevelMain levelMain, string fileName, GameObject confirmObj)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        if(!Directory.Exists(Application.persistentDataPath + "/saves")){
+            Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+        }
+        string path = Application.persistentDataPath + "/saves/" + fileName +".fun";
+        if (File.Exists(path)){
+            confirmObj.SetActive(true);
+        }else{
+            FileStream stream = new FileStream(path, FileMode.Create);
+            PlayerData data;
+            data = new PlayerData(levelMain);
+            formatter.Serialize(stream, data);
+            stream.Close();
+            confirmObj.transform.parent.gameObject.SetActive(false);        
+        }
+    }
     public static void SavePlayer (TutorialMainScript tutorialMain, string fileName){
         BinaryFormatter formatter = new BinaryFormatter();
         if(!Directory.Exists(Application.persistentDataPath + "/saves")){
@@ -54,6 +72,18 @@ public static class SaveSystem
         stream.Close();
     }
         public static void SavePlayer (Main level2Main, string fileName){
+        BinaryFormatter formatter = new BinaryFormatter();
+        if(!Directory.Exists(Application.persistentDataPath + "/saves")){
+            Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+        }
+        string path = Application.persistentDataPath + "/saves/" + fileName +".fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        PlayerData data;
+        data = new PlayerData(level2Main);
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+    public static void SavePlayer (LevelMain level2Main, string fileName){
         BinaryFormatter formatter = new BinaryFormatter();
         if(!Directory.Exists(Application.persistentDataPath + "/saves")){
             Directory.CreateDirectory(Application.persistentDataPath + "/saves");

@@ -44,6 +44,20 @@ public class PlayerData
         rotation[3] = rotate.z;
         level2Floor = level2Main.challengeCompleted;
     }
+    public PlayerData (LevelMain levelMain){
+        level = SceneManager.GetActiveScene().buildIndex;
+        Vector3 transform;
+        Quaternion rotate;
+        transform = levelMain.controller.gameObject.transform.position;
+        rotate = levelMain.controller.gameObject.transform.rotation;
+        position[0] = transform.x;
+        position[1] = transform.y;
+        position[2] = transform.z;
+        rotation[0] = rotate.w;
+        rotation[1] = rotate.x;
+        rotation[2] = rotate.y;
+        rotation[3] = rotate.z;
+    }
         public PlayerData (TutorialMainScript tutorialMain){
         level = SceneManager.GetActiveScene().buildIndex;
         Vector3 transform;

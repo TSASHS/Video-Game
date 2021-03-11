@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelMain : MonoBehaviour
 {
-    private bool pause;
-    public bool onGround;
+    private bool pause = false;
+    public bool onGround, onLadder;
     private float y2;
     public float mouseSensitivity, groundDistance, lightGroundDistance, jumpHeight, gravity, speed;
     public Vector3 fallVelocity;
-    public LayerMask ground;
+    public LayerMask ground, ladder;
     public Camera mainCamera;
     public CharacterController controller;
-    public GameObject torchLight, walkingAudio;
+    public GameObject torchLight, walkingAudio, pauseMenu, whitedDot, confirmObj;
     public Transform groundCheck;
     private Transform torchLightPos;
+    public TMP_InputField inputField;
 
     //Load Game functions in Awake Function
     void Awake()
@@ -49,16 +51,38 @@ public class LevelMain : MonoBehaviour
     }
     void Pause()
     {
-
+        pause = !pause;
+        if(pause == true){
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            pauseMenu.SetActive(true);
+            whitedDot.SetActive(false);
+        }else{
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            pauseMenu.SetActive(false);
+            whitedDot.SetActive(true);
+        }
+    }
+    void OnDrawGizmos ()
+    {
+        Gizmos.DrawSphere(groundCheck.position, groundDistance);
     }
     void Movement()
     {
         onGround = Physics.CheckSphere(groundCheck.position, groundDistance, ground);
-
+        onLadder= Physics.Raycast(groundCheck.position, controller.transform.forward ,groundDistance*4, ladder);
+        if(!onGround){
+            onGround = onLadder;
+        }
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-
-        Vector3 movementVector = controller.transform.right * x + controller.transform.forward * y;
+        Vector3 movementVector;
+        if(onLadder == true){
+            movementVector = controller.transform.right * x + controller.transform.up * y;
+        }else{
+            movementVector = controller.transform.right * x + controller.transform.forward * y;   
+        }
         
         print(movementVector.x);
         print(movementVector.z);
@@ -92,11 +116,13 @@ public class LevelMain : MonoBehaviour
     }
     public void SaveGame()
     {
-
+        SaveSystem.SavePlayer(this, inputField.text, confirmObj);
+        inputField.transform.parent.gameObject.SetActive(false);        
     }
     public void ConfirmSaveGame()
     {
-
+        SaveSystem.SavePlayer(this, inputField.text);
+        confirmObj.transform.parent.gameObject.SetActive(false);  
     }
 }
 public class collisionClass : MonoBehaviour 
