@@ -77,7 +77,7 @@ public class SceneChanger2 : MonoBehaviour
         DontDestroyOnLoad(newObj);
         newObj.tag = "LoadSystem";
 
-        SceneManager.LoadScene(data.level);
+        SceneManager.LoadScene(data.level - 1);
     }
 }
 public class StorageClass : MonoBehaviour

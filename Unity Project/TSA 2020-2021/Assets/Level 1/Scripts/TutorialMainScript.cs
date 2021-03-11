@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor;
 using System.IO;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class TutorialMainScript : MonoBehaviour
 {
@@ -55,7 +54,7 @@ public class TutorialMainScript : MonoBehaviour
     float y;
     private bool torch = true;
     public TMP_InputField inputField;
-    public GameObject confirmObj;
+    public GameObject confirmObj, walking, settingsMenu;
     // Start is called before the first frame update
     // Update is called once per frame
     void Awake()
@@ -108,6 +107,7 @@ public class TutorialMainScript : MonoBehaviour
                 cubeList[i].transform.position = new Vector3(data.firstLevelBoxPositionsx[i], data.firstLevelBoxPositionsy[i], cubeList[i].transform.position.z);
             }
             animator1.SetBool("Torch", data.torchState);
+            Destroy(objs[0]);
         }
     }
     void Start()
@@ -166,10 +166,12 @@ public class TutorialMainScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.T) && tutorialStage > 2){
             Torch();
         }
-        if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D)){
+        if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)){
             animator1.SetBool("Walking", true);
+            walking.SetActive(true);
         }else{
             animator1.SetBool("Walking", false);
+            walking.SetActive(false);
         }
     }
     void Tutorial ()
@@ -482,5 +484,21 @@ public class TutorialMainScript : MonoBehaviour
     {
         SaveSystem.SavePlayer(this, inputField.text);
         confirmObj.transform.parent.gameObject.SetActive(false);
+    }
+    public void Restart ()
+    {
+        SceneManager.LoadScene("Loading");
+    }
+    public void musicVolume(float volume)
+    {
+        GameObject [] musicObjs = GameObject.FindGameObjectsWithTag("music");
+        musicObjs[0].GetComponent<AudioSource>().volume = volume;
+    }
+    public void SFXVolume(float volume)
+    {
+        GameObject [] sfxObjs = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (GameObject o in sfxObjs){
+            o.GetComponent<AudioSource>().volume = volume;
+        }
     }
 }

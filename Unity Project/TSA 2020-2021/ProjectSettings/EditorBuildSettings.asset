@@ -21,6 +21,15 @@ EditorBuildSettings:
     path: Assets/Universal/Scenes/Level 2.unity
     guid: 271a3d4e8adc38748a6f9fbc43e7ef38
   - enabled: 1
+    path: Assets/Universal/Scenes/Loading2.unity
+    guid: 36846553f9e33994a9b63a088033fab4
+  - enabled: 1
     path: Assets/Universal/Scenes/Level 3.unity
     guid: 9c1e5667c5954ec43be5cc4606069597
+  - enabled: 1
+    path: Assets/Universal/Scenes/Treasure Room.unity
+    guid: b7c397418fe3a2643a310311642a9481
+  - enabled: 1
+    path: Assets/Universal/Scenes/Credits.unity
+    guid: a879c5755b0b9e04b9799c935706e8c9
   m_configObjects: {}

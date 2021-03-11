@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
@@ -13,6 +12,7 @@ public class LevelMain : MonoBehaviour
     public LayerMask ground, ladder;
     public Camera mainCamera;
     public CharacterController controller;
+    public Animator torchAnim;
     public GameObject torchLight, walkingAudio, pauseMenu, whitedDot, confirmObj;
     public Transform groundCheck;
     private Transform torchLightPos;
@@ -21,7 +21,23 @@ public class LevelMain : MonoBehaviour
     //Load Game functions in Awake Function
     void Awake()
     {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("LoadSystem");
+        if(objs.Length > 0){
+            PlayerData data = objs[0].GetComponent<StorageClass>().data;
+            Vector3 positon = new Vector3(data.position[0], data.position[1], data.position[2]);
+            Quaternion rotation = new Quaternion(data.rotation[1], data.rotation[2], data.rotation[3], data.rotation[0]);
+            Quaternion cameraRotation = new Quaternion(data.cameraRotation[1], data.cameraRotation[2], data.cameraRotation[3], data.cameraRotation[0]);
 
+            controller.enabled = false;
+            controller.transform.position = positon;
+            controller.enabled = true;
+            controller.transform.rotation = rotation;
+            controller.transform.GetChild(2).rotation = cameraRotation;
+
+            torchAnim.SetBool("Torch", data.torchState);
+
+            Destroy(objs[0]);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -42,8 +58,10 @@ public class LevelMain : MonoBehaviour
         Movement();
         if((Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)) && onGround){
             walkingAudio.SetActive(true);
+            torchAnim.SetBool("Walking", true);
         }else{
             walkingAudio.SetActive(false);
+            torchAnim.SetBool("Walking", false);
         }
         if(Input.GetKeyDown(KeyCode.T)){
             Torch();
@@ -112,7 +130,9 @@ public class LevelMain : MonoBehaviour
     }
     void Torch()
     {
-        
+        bool torch = !torchAnim.GetBool("Torch");
+        torchAnim.SetBool("Torch", !torch);
+        torchAnim.SetBool("b", true);
     }
     public void SaveGame()
     {
@@ -124,11 +144,20 @@ public class LevelMain : MonoBehaviour
         SaveSystem.SavePlayer(this, inputField.text);
         confirmObj.transform.parent.gameObject.SetActive(false);  
     }
-}
-public class collisionClass : MonoBehaviour 
-{
-    void OnTriggerEnter()
+    public void Restart ()
     {
-        //EndGame
+        SceneManager.LoadScene("Loading2");
+    }
+    public void musicVolume(float volume)
+    {
+        GameObject [] musicObjs = GameObject.FindGameObjectsWithTag("music");
+        musicObjs[0].GetComponent<AudioSource>().volume = volume;
+    }
+    public void SFXVolume(float volume)
+    {
+        GameObject [] sfxObjs = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (GameObject o in sfxObjs){
+            o.GetComponent<AudioSource>().volume = volume;
+        }
     }
 }

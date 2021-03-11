@@ -6,6 +6,7 @@ TagManager:
   tags:
   - music
   - LoadSystem
+  - SFX
   layers:
   - Default
   - TransparentFX

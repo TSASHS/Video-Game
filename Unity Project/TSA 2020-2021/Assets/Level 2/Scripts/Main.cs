@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class Main : MonoBehaviour
                 leverList[i] = data.leverPositions[i];
                 animators[i+15].SetBool("LeverDown", data.leverPositions[i]);
             }
+            Destroy(objs[0]);
         }
     }
     void Start ()
@@ -224,7 +226,7 @@ public class Main : MonoBehaviour
     }
     public void LeaveRoom()
     {
-       _SceneChanger.sceneChange("Level 3");
+       _SceneChanger.sceneChange("Loading2");
     }
     public void SavePlayer ()
     {
@@ -235,5 +237,21 @@ public class Main : MonoBehaviour
     {
         SaveSystem.SavePlayer(this, inputField.text);
         confirmObj.transform.parent.gameObject.SetActive(false);  
+    }
+    public void Restart ()
+    {
+        SceneManager.LoadScene("Loading - Copy");
+    }
+    public void musicVolume(float volume)
+    {
+        GameObject [] musicObjs = GameObject.FindGameObjectsWithTag("music");
+        musicObjs[0].GetComponent<AudioSource>().volume = volume;
+    }
+    public void SFXVolume(float volume)
+    {
+        GameObject [] sfxObjs = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (GameObject o in sfxObjs){
+            o.GetComponent<AudioSource>().volume = volume;
+        }
     }
 }
