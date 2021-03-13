@@ -45,6 +45,7 @@ public class LevelMain : MonoBehaviour
         torchLightPos = torchLight.transform;
         Time.timeScale = 1;   
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pause = false;        
     }
 

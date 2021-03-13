@@ -59,6 +59,7 @@ public class Main : MonoBehaviour
     {   
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         torchLightPos = torchLight.transform;
         challengeCompleted = false;
         pause = false;

@@ -9,7 +9,7 @@ public class TutorialMainScript : MonoBehaviour
 {
     float tick = 0;
     public GameObject tutorialSprite;
-    public GameObject player, keys, circleOnGround;
+    public GameObject player, keys, circleOnGround, pauseMenu;
     GameObject playerCamera;
     TextMeshProUGUI tutorialText;
     public TextMeshProUGUI wText, aText, sText, dText;
@@ -27,7 +27,7 @@ public class TutorialMainScript : MonoBehaviour
     public Animator animator, animator2, animator1;
     public List<GameObject> cubeList = new List<GameObject>();
     public List<Image> circleList = new List<Image>();
-    private bool challenge = false;
+    public bool challenge = false;
     public GameObject eObj, whitePoint;
     public float mouseSensitivity = 120f;
     float y2 = 0;
@@ -143,8 +143,10 @@ public class TutorialMainScript : MonoBehaviour
     void Update()
     {
         tick += 1;
-        Challenge1();
-        eTextFunc();
+        if(pauseMenu.activeSelf != true){
+            Challenge1();
+            eTextFunc();
+        }
         if(challenge != true){
             if(tutorialStage > 0){
                 LookAround();
@@ -306,6 +308,7 @@ public class TutorialMainScript : MonoBehaviour
                 interactable0 = false;
                 mainCamera.enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
             if(Input.GetMouseButtonDown(0) && moving == false){
                 RaycastHit hit;
@@ -364,6 +367,7 @@ public class TutorialMainScript : MonoBehaviour
                 interactable0 = false;
                 mainCamera.enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
+                                Cursor.visible = false;
                 animator.SetBool("ChallengeCompleted", true);
                 tutorialText.color = Color.green;
                 secondCountBool = true;
@@ -382,6 +386,7 @@ public class TutorialMainScript : MonoBehaviour
                         mainCamera.enabled = false;
                         interactCamera0.enabled = true;
                         Cursor.lockState = CursorLockMode.None;
+                        Cursor.visible = true;
                         whitePoint.SetActive(false);
                     }
                 }

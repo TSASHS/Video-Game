@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu, cursor, tutorialsprite, settingsMenu;
     public bool yea = true;
+    public TutorialMainScript challenge;
     void Start()
     {
         
@@ -20,6 +21,7 @@ public class PauseMenu : MonoBehaviour
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 cursor.SetActive(false);
+                Cursor.visible = true;
                 if(yea == true){
                     tutorialsprite.SetActive(false);
                 }
@@ -39,10 +41,17 @@ public class PauseMenu : MonoBehaviour
     public void unpause()
     {
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        cursor.SetActive(true);
         if(yea == true){
             tutorialsprite.SetActive(true);
-        }   
+            if(challenge.challenge == false){
+                Cursor.lockState = CursorLockMode.Locked;
+                cursor.SetActive(true);
+                Cursor.visible = false;
+            }
+        }else{
+                Cursor.lockState = CursorLockMode.Locked;
+                cursor.SetActive(true);
+                Cursor.visible = false;
+        }
     }
 }

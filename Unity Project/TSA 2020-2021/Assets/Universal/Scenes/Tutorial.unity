@@ -22933,6 +22933,7 @@ MonoBehaviour:
   tutorialsprite: {fileID: 420451213}
   settingsMenu: {fileID: 2030877891}
   yea: 1
+  challenge: {fileID: 1551622905}
 --- !u!1 &1431413834
 GameObject:
   m_ObjectHideFlags: 0
@@ -23886,6 +23887,7 @@ MonoBehaviour:
   player: {fileID: 1448680368}
   keys: {fileID: 1006648767}
   circleOnGround: {fileID: 2088413839}
+  pauseMenu: {fileID: 2132565667}
   wText: {fileID: 1958266822}
   aText: {fileID: 1747998630}
   sText: {fileID: 1801765300}
@@ -23938,6 +23940,7 @@ MonoBehaviour:
   - {fileID: 2010706848}
   - {fileID: 399033367}
   - {fileID: 103107372}
+  challenge: 0
   eObj: {fileID: 951658252}
   whitePoint: {fileID: 116692826}
   mouseSensitivity: 160
