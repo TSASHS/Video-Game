@@ -69,18 +69,6 @@ public class LevelMain : MonoBehaviour
     }
     void Pause()
     {
-        pause = !pause;
-        if(pause == true){
-            Time.timeScale = 0;
-            Cursor.lockState = CursorLockMode.None;
-            pauseMenu.SetActive(true);
-            whitedDot.SetActive(false);
-        }else{
-            Time.timeScale = 1;
-            Cursor.lockState = CursorLockMode.Locked;
-            pauseMenu.SetActive(false);
-            whitedDot.SetActive(true);
-        }
     }
     void OnDrawGizmos ()
     {
@@ -101,9 +89,6 @@ public class LevelMain : MonoBehaviour
         }else{
             movementVector = controller.transform.right * x + controller.transform.forward * y;   
         }
-        
-        print(movementVector.x);
-        print(movementVector.z);
 
         fallVelocity.y -= gravity * Time.deltaTime;
 

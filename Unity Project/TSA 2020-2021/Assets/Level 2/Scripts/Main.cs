@@ -101,17 +101,6 @@ public class Main : MonoBehaviour
 
     void Pause()
     {
-        pause = !pause;
-        pauseMenu.SetActive(pause);
-        if(pause==true){
-            Time.timeScale = 0;
-            Cursor.lockState = CursorLockMode.None;
-            cursor.SetActive(false);
-        }else{
-            Time.timeScale = 1;
-            Cursor.lockState = CursorLockMode.Locked;
-            cursor.SetActive(true);
-        }
     }
     void LookAround()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu, cursor, tutorialsprite, settingsMenu;
+    public bool yea = true;
     void Start()
     {
         
@@ -19,23 +20,29 @@ public class PauseMenu : MonoBehaviour
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 cursor.SetActive(false);
-                tutorialsprite.SetActive(false);
+                if(yea == true){
+                    tutorialsprite.SetActive(false);
+                }
             }else{
-                unpause();
-                Cursor.lockState = CursorLockMode.Locked;
-                cursor.SetActive(true);
-                tutorialsprite.SetActive(true);
+                if(settingsMenu.activeSelf == true){
+                    print(2);
+                    settingsMenu.SetActive(false);
+                    pauseMenu.SetActive(true);
+                }else{
+                    print(1);
+                    unpause();
+                }
             }
-            if(settingsMenu.activeSelf == true){
-                settingsMenu.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                cursor.SetActive(true);
-                tutorialsprite.SetActive(true);
-            }
+
         }
     }
     public void unpause()
     {
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        cursor.SetActive(true);
+        if(yea == true){
+            tutorialsprite.SetActive(true);
+        }   
     }
 }
