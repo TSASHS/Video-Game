@@ -4,6 +4,6 @@ public class collisionClass : MonoBehaviour
 {
     void OnTriggerEnter(Collider col)
     {
-        SceneManager.LoadScene("Treasure Room");
+        SceneManager.LoadScene("LoadingLastLol");
     }
 }
