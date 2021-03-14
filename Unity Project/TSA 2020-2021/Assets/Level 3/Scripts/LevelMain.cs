@@ -34,18 +34,14 @@ public class LevelMain : MonoBehaviour
             controller.enabled = true;
             controller.transform.rotation = rotation;
             controller.transform.GetChild(2).rotation = cameraRotation;
-            
-            torchAnim.gameObject.transform.rotation = new Quaternion(67.5f,0,0,0);
+
+            torchAnim.SetBool("Torch",data.torchState);
+            torchAnim.SetBool("b", true);
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        if(objs.Length > 0){
-            PlayerData data = objs[0].GetComponent<StorageClass>().data;
-            torchAnim.SetBool("Torch", data.torchState);
-            print(torchAnim.gameObject.transform.rotation.x);
-        }
         torchLightPos = torchLight.transform;
         Time.timeScale = 1;   
         Cursor.lockState = CursorLockMode.Locked;
@@ -128,7 +124,7 @@ public class LevelMain : MonoBehaviour
     {
         bool torch = !torchAnim.GetBool("Torch");
         print(torch);
-        torchAnim.SetBool("Torch", !torch);
+        torchAnim.SetBool("Torch", torch);
         print(torchAnim.GetBool("Torch"));
         torchAnim.SetBool("b", true);
     }

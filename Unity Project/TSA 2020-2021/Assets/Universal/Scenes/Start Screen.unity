@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1045,6 +1045,7 @@ GameObject:
   - component: {fileID: 584148497}
   - component: {fileID: 584148496}
   - component: {fileID: 584148498}
+  - component: {fileID: 584148499}
   m_Layer: 0
   m_Name: Sound
   m_TagString: music
@@ -1174,6 +1175,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53bf9235ccfed354e8f342d2287e3180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &584148499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584148495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce4374193da985c41b1d586d6590e4ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music:
+  - {fileID: 8300000, guid: 206e3ab7106e264429ab584d96f1682a, type: 3}
+  - {fileID: 8300000, guid: 0772c861fd0cc234ab10a65af82ba0cc, type: 3}
+  - {fileID: 8300000, guid: 6a2fb952cdf7cff48b25ed9d36cf02ff, type: 3}
+  - {fileID: 8300000, guid: aec925b2060607246b99e5a9e3e42325, type: 3}
+  - {fileID: 8300000, guid: 9527ae628a827d74f889ba9d5b38933d, type: 3}
 --- !u!1 &851746709
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1259,23 +1259,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Treasures of the Pharaos\n\n\n\nProject Manager: \r\n\r\nAhmed Guler\r\n\r\nPuzzle:\r\n\r\nHamza
-    Abu\r\n\r\n3D Models: \r\n\r\nLandon Stoflet\r\n\r\nCode:\r\n\r\nAhmed Guler\r\n\r\nTextures:\r\n\r\nCollected
+  m_text: "Treasure of the Pharaos\n\n\n\nProject Manager: \r\n\r\nAhmed Guler\r\n\n\r\nPuzzle:\r\n\r\nHamza
+    Abu\r\n\n\r\n3D Models: \r\n\r\nLandon Stoflet\r\n\n\r\nCode:\r\n\r\nAhmed Guler\r\n\n\r\nTextures:\r\n\r\nCollected
     By: Ahmed Guler\r\n\r\n\u201CFine_Grained_Wood\u201D by Rob Tyuytel \r\nhttps://texturehaven.com/tex/?c=wood&t=fine_grained_wood\r\n\r\n\u201CSandstone
     Cracks\u201D by Rob Tyuytel\r\nhttps://texturehaven.com/tex/?c=sandstone&t=sandstone_cracks
     \r\n\r\n\u201CSandstone Blocks\u201D by Rob Tyuytel\r\nhttps://texturehaven.com/tex/?c=sandstone&t=sandstone_blocks_04
-    \r\n\r\nAll other textures by Matthew Chaffin\r\n\r\nUI:\r\n\r\nAdam Hassan &
-    Hamza Abu\r\n\r\nCredits:\r\n\r\nHamza Abu\r\n\r\nMusic:\r\n\r\nCollected by:
-    Ahmed Guler\r\n\r\n\u201CMomia\u201D By RKFM & World Music Official\r\n\r\n\u201CArab
+    \r\n\r\nAll other textures by Matthew Chaffin\r\n\r\n\nUI:\r\n\r\nAdam Hassan
+    & Hamza Abu\r\n\r\n\nCredits:\r\n\r\nHamza Abu\r\n\r\n\nMusic:\r\n\r\nCollected
+    by: Ahmed Guler\r\n\r\n\u201CMomia\u201D By RKFM & World Music Official\r\n\r\n\u201CArab
     Egypt MUSIC THEME\u201D By: Free Music TV\r\n\r\n\u201CTemple of Endless Sands\u201D
-    By: Darren Curtis\r\n\r\nSFX:\r\n\r\nCollected by: Ahmed Guler\r\n\r\n\u201CCrackling
+    By: Darren Curtis\r\n\r\nSelections From:  \"1 Hour of Ambient Fantasy Music\"
+    by Jota R\n\n\n\nSFX:\r\n\r\nCollected by: Ahmed Guler\r\n\r\n\u201CCrackling
     Fireplace Sound Effect HQ\u201D By Virtual Fireplace\r\n\r\n\u201CWalking Sound
-    Effect\u201D by n Beats\r\n\r\n\u201CStone Slide Sound Effects\u201D by 2MirrorsDialogue\r\n\r\nUsed
+    Effect\u201D by n Beats\r\n\r\n\u201CStone Slide Sound Effects\u201D by 2MirrorsDialogue\r\n\r\n\nUsed
     Images\r\n\r\nCollected by: Ahmed Guler\r\n\r\nhttps://www.flickr.com/photos/101561334@N08/28671180651/in/photostream/
     \r\nHieroglyphic Papyrus Book of the Dead; Late Period, 2nd Cent. BC; from Thebes
     By Gary Todd\r\n\r\nhttps://unsplash.com/photos/PtGvu2P-Gco \r\nPyramid of Egypt
     Photo by Steffen Gunderman\r\n\r\nhttps://pixabay.com/illustrations/tutankhamen-pharaoh-egypt-1662814/
-    \r\nTutankhamen-pharaoh-egypt by Chaos 07\r\n\r\nModel Assets:\r\n\r\nCollected
+    \r\nTutankhamen-pharaoh-egypt by Chaos 07\r\n\r\n\nModel Assets:\r\n\r\nCollected
     by: Landon Stoflet\r\n\r\nhttps://sketchfab.com/capivan \r\n\u201CCartoon Torch\u201D
     by Ivan Alarcon\r\n\r\n\u201CChest\u201D by hadoka\r\nhttps://www.cgtrader.com/free-3d-models/interior/other/chest-c646fd44-3c01-48aa-8053-850f7f23fb5b
     \r\n\r\n\u201CCypriot Sarcophagus\u201D by dazinbane\r\nhttps://www.cgtrader.com/free-3d-models/various/various-models/cypriot-sarcophagus
