@@ -18,19 +18,21 @@ public class audio : MonoBehaviour
     {
         if(musicSource.isPlaying == false && silent == false)
         {
-            int song = Random.Range(0,7);
-            if (song > 5){
+            int song = Random.Range(0,6);
+            if (song > 4){
                 silent = true;
             }else{
                 if(lastSong != song)
                 {
                     musicSource.clip = music[song];
                     lastSong = song;
+                    musicSource.Play();
                 }else{
                     while(lastSong == song){
                         song = Random.Range(0,5);
                     }
                     musicSource.clip = music[song];
+                    musicSource.Play();
                 }
             }
         }

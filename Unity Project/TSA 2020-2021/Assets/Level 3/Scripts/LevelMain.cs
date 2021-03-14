@@ -17,11 +17,12 @@ public class LevelMain : MonoBehaviour
     public Transform groundCheck;
     private Transform torchLightPos;
     public TMP_InputField inputField;
+    GameObject[] objs;
 
     //Load Game functions in Awake Function
     void Awake()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("LoadSystem");
+        objs = GameObject.FindGameObjectsWithTag("LoadSystem");
         if(objs.Length > 0){
             PlayerData data = objs[0].GetComponent<StorageClass>().data;
             Vector3 positon = new Vector3(data.position[0], data.position[1], data.position[2]);
@@ -33,15 +34,18 @@ public class LevelMain : MonoBehaviour
             controller.enabled = true;
             controller.transform.rotation = rotation;
             controller.transform.GetChild(2).rotation = cameraRotation;
-
-            torchAnim.SetBool("Torch", data.torchState);
-
-            Destroy(objs[0]);
+            
+            torchAnim.gameObject.transform.rotation = new Quaternion(67.5f,0,0,0);
         }
     }
     // Start is called before the first frame update
     void Start()
     {
+        if(objs.Length > 0){
+            PlayerData data = objs[0].GetComponent<StorageClass>().data;
+            torchAnim.SetBool("Torch", data.torchState);
+            print(torchAnim.gameObject.transform.rotation.x);
+        }
         torchLightPos = torchLight.transform;
         Time.timeScale = 1;   
         Cursor.lockState = CursorLockMode.Locked;
@@ -65,6 +69,7 @@ public class LevelMain : MonoBehaviour
             torchAnim.SetBool("Walking", false);
         }
         if(Input.GetKeyDown(KeyCode.T)){
+            print("something");
             Torch();
         }
     }
@@ -100,8 +105,10 @@ public class LevelMain : MonoBehaviour
             fallVelocity.y = Mathf.Sqrt(jumpHeight * -2f * -gravity);
         }
         controller.Move(fallVelocity * Time.deltaTime);
-
-        controller.Move(movementVector * speed *  Time.deltaTime);
+        
+        if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)){
+            controller.Move(movementVector * speed *  Time.deltaTime);
+        }
     }
     void Look()
     {
@@ -117,7 +124,9 @@ public class LevelMain : MonoBehaviour
     void Torch()
     {
         bool torch = !torchAnim.GetBool("Torch");
+        print(torch);
         torchAnim.SetBool("Torch", !torch);
+        print(torchAnim.GetBool("Torch"));
         torchAnim.SetBool("b", true);
     }
     public void SaveGame()

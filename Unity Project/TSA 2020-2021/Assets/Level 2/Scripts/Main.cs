@@ -143,7 +143,9 @@ public class Main : MonoBehaviour
         }
         controller.Move(fallVelocity * Time.deltaTime);
 
-        controller.Move(movementVector * speed *  Time.deltaTime);
+        if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)){
+            controller.Move(movementVector * speed *  Time.deltaTime);
+        }
     }
     void LightFLicker ()
     {

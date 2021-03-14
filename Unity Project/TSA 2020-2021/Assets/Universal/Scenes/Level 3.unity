@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -73336,6 +73336,7 @@ MonoBehaviour:
   tutorialsprite: {fileID: 0}
   settingsMenu: {fileID: 1927745406}
   yea: 0
+  challenge: {fileID: 0}
 --- !u!1 &1465685665
 GameObject:
   m_ObjectHideFlags: 0
