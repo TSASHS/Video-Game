@@ -145,6 +145,9 @@ public class Main : MonoBehaviour
 
         if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D)){
             controller.Move(movementVector * speed *  Time.deltaTime);
+        }else{
+            movementVector.x=0;
+            movementVector.y=0;
         }
     }
     void LightFLicker ()

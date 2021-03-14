@@ -23943,7 +23943,7 @@ MonoBehaviour:
   challenge: 0
   eObj: {fileID: 951658252}
   whitePoint: {fileID: 116692826}
-  mouseSensitivity: 160
+  mouseSensitivity: 200
   controller: {fileID: 1448680369}
   speed: 1.4
   gravity: 7
