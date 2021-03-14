@@ -4,18 +4,20 @@ using TMPro;
 
 public class LevelMain : MonoBehaviour
 {
-    private bool pause = false;
+    private bool secondCountBool = false, pause = false;
     public bool onGround, onLadder;
-    private float y2;
+    private float y2, secondCount;
     public float mouseSensitivity, groundDistance, lightGroundDistance, jumpHeight, gravity, speed;
     public Vector3 fallVelocity;
     public LayerMask ground, ladder;
     public Camera mainCamera;
     public CharacterController controller;
     public Animator torchAnim;
-    public GameObject torchLight, walkingAudio, pauseMenu, whitedDot, confirmObj;
+    public GameObject torchLight, walkingAudio, pauseMenu, whitedDot, confirmObj, tutorialText;
+    private GameObject tutorialObj;
     public Transform groundCheck;
     private Transform torchLightPos;
+    private TextMeshProUGUI tutorialTextUGUI;
     public TMP_InputField inputField;
     GameObject[] objs;
 
@@ -46,12 +48,26 @@ public class LevelMain : MonoBehaviour
         Time.timeScale = 1;   
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        pause = false;        
+        pause = false;
+        tutorialObj = tutorialText.transform.parent.gameObject;
+        tutorialTextUGUI = tutorialText.GetComponent<TextMeshProUGUI>();        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(tutorialText.activeSelf == true){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                tutorialTextUGUI.color = Color.green;
+                secondCountBool = true;
+            }
+        }
+        if(secondCountBool == true){
+            secondCount += Time.deltaTime;
+            if(secondCount >= 1){
+                tutorialObj.SetActive(false);
+            }
+        }
         Look();
         if(Input.GetKeyDown(KeyCode.Escape)){
             Pause();
